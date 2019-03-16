@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "backend server for Zhongnan's personal project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "apollo-server-koa": "^2.4.8",
+    "babel": "^6.23.0",
+    "bcrypt": "^3.0.4",
+    "glob": "^7.1.1",
+    "graphql": "^14.1.1",
+    "jsonwebtoken": "^7.4.3",
+    "koa": "^2.0.0-alpha.7",
+    "koa-bodyparser": "^3.0.0",
+    "koa-cors": "0.0.16",
+    "koa-helmet": "^2.0.0",
+    "koa-jwt": "^2.2.4",
+    "koa-logger": "^2.0.0",
+    "koa-router": "^7.0.0",
+    "koa-static": "^4.0.1",
+    "mongoose": "^4.4.3"
+  },
+  "author": "",
+  "license": "ISC"
+}
