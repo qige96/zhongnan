@@ -2,16 +2,32 @@
 <html>
 <head>
     <title>example</title>
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">  
 </head>
 <body>
     <div id="1"></div>
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script type="text/javascript">
-    $.post("http:localhost:3000/login", {userId:16, password:123,}, headers={},(res)=>{
+    $.post("http:localhost:3000/login", {userId:16, password:123,}, (res)=>{
+        var token = res.token;
         console.log(res)
+        let data ={
+            query: "{user {userId}}",
+            }
+        $.ajax({
+            url: "http://localhost:3000/query",
+            type: "POST",
+            data: data,
+            beforeSend: (req)=>{
+                req.setRequestHeader('Authorization', "Bearer "+token)
+            },
+            success: (res)=>{
+                console.log(res)
+            }
+        })
+
     })
+    
 </script>
 </body>
 </html>
