@@ -11,27 +11,32 @@ const loginRouter = new Router();
 
 async function login(ctx) {
     const { body } = ctx.request
+    // const  body  = ctx.query
+    console.log(body)
     try {
-      const user = await User.findOne({ userId: body.userId });
+      const user = await User.findOne({ userId: body.userId });      
       if (!user) {
         ctx.status = 401
         ctx.body = {
           message: '账号错误',
         }
         return;
-      }
+      }      
       // 匹配密码是否相等
       if (await bcrypt.compare(body.password, user.password)) {
         ctx.status = 200
+        const token = jsonwebtoken.sign({
+            data: user,
+            // 设置 token 过期时间
+            exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
+          }, secret)
+        ctx.cookies.set('jwt', token)
+        // ctx.session.jwt = token
         ctx.body = {
           message: '登录成功',
           user: user.userInfo,
           // 生成 token 返回给客户端
-          token: jsonwebtoken.sign({
-            data: user,
-            // 设置 token 过期时间
-            exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
-          }, secret),
+          token,
         }
       } else {
         ctx.status = 401
@@ -75,9 +80,17 @@ async function register(ctx) {
     }
   }
 
+async function logout(ctx, next){
+  ctx.cookies.set('jwt', null)
+  // ctx.session = null;
+  ctx.body = {msg: 'logout success!'}
+}
+
 
 loginRouter
   .get('/login', login)
+  .post('/login', login)
+  .get('/logout', logout)
   .post('/register', register)
 
 
