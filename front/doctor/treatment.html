@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <header class="header">
+        <nav class="navbar">
+            <!-- Search Box-->
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                    <input type="search" placeholder="What are you looking for..." class="form-control">
+                </form>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <!-- Navbar Header-->
+                    <div class="navbar-header">
+                        <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                        <div class="brand-text d-none d-lg-inline-block"><span>医生 </span><strong>工作台</strong></div>
+                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                        <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                    </div>
+                    <!-- Navbar Menu -->
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                        <!-- Search-->
+                        <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                        <!-- Notifications-->
+
+                        <!-- Logout    -->
+                        <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">退出</span><i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+            <!-- Sidebar Header-->
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+                    <h1 class="h4">ZZZ</h1>
+                    <p>内科医师</p>
+                </div>
+            </div>
+            <!-- Sidebar Navidation Menus--><span class="heading">工作栏</span>
+            <ul class="list-unstyled">
+                <li><a href="doctorindex.html"> <i class="icon-home"></i>病人预约 </a></li>
+                <li><a href="bedtable.html"> <i class="icon-grid"></i>床位表 </a></li>
+                <li><a href="doctorlevel.html"> <i class="icon-interface-windows"></i> 患者评价</a></li>
+                <li><a href="hospitalmail.html"> <i class="icon-mail"></i>医院信箱</a></li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>值班表 </a>
+                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li><a href="onDuty1.html">科室1</a></li>
+                        <li><a href="onDuty2.html">科室2</a></li>
+                        <li><a href="onDuty3.html">科室3</a></li>
+                    </ul>
+                </li>
+                <li><a href="login.html"> <i class="icon-screen"></i>Login page </a></li>
+            </ul><span class="heading">Extras</span>
+            <ul class="list-unstyled">
+                <li class="active"> <a href="treatment.html"> <i class="icon-flask"></i>诊治页面 </a></li>
+            </ul>
+        </nav>
+        <div class="content-inner">
+            <!-- Page Header-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">病人诊治</h2>
+                </div>
+            </header>
+<br>
+            <!-- Form Elements -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <div class="dropdown">
+                            <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                            <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                        </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">诊断结果</h3>
+                    </div>
+                    <div style="margin-left: 10%;margin-top: 30px;">
+                        <table border="1" width="700px" style="text-align: center;" >
+                            <tr>
+                                <td width="80px" height="40px">姓名</td>
+                                <td width="120px"></td>
+                                <td width="80px">性别</td>
+                                <td width="120px"></td>
+                                <td rowspan="4" width="100px">头像</td>
+                            </tr>
+                            <tr>
+                                <td height="40px">年龄</td>
+                                <td> </td>
+                                <td>床位号</td>
+                                <td> 暂无</td>
+                            </tr>
+
+                            <tr>
+                                <td height="40px">问诊日期</td>
+                                <td> </td>
+                                <td height="40px">证件号</td>
+                                <td > </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">症状</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">诊断</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">所需药物</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">备注</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">是否住院 <br><small class="text-primary">（是则打钩）</small></label>
+                                <div class="col-sm-9">
+                                    <div class="i-checks">
+                                        <input id="checkboxCustom1" type="checkbox" value="" class="checkbox-template">
+                                        <label for="checkboxCustom1">住院</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label">病房</label>
+                                <div class="col-sm-9">
+                                    <select name="account" class="form-control mb-3">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-3 form-control-label">床号</label>
+                                <div class="col-sm-9">
+                                    <select name="account" class="form-control mb-3">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <button type="button" class="btn btn-primary">确诊</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- JavaScript files-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="js/charts-home.js"></script>
+<!-- Main File-->
+<script src="js/front.js"></script>
+</body>
+</html>
