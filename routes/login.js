@@ -10,9 +10,12 @@ const { secret } = require('../config')
 const loginRouter = new Router();
 
 async function login(ctx) {
-    const { body } = ctx.request
-    // const  body  = ctx.query
-    console.log(body)
+    let body;
+    if (ctx.request.method == "GET")
+      body = ctx.query
+    else
+      body = ctx.request.body
+    
     try {
       const user = await User.findOne({ userId: body.userId });      
       if (!user) {
@@ -26,10 +29,14 @@ async function login(ctx) {
       if (await bcrypt.compare(body.password, user.password)) {
         ctx.status = 200
         const token = jsonwebtoken.sign({
-            data: user,
+            data: { 
+              user: user, 
+              date: Date()
+            },
             // 设置 token 过期时间
-            exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
-          }, secret)
+            exp: Math.floor(Date.now() / 1000) + (60 * 60), 
+          }, 
+          secret)
         ctx.cookies.set('jwt', token)
         // ctx.session.jwt = token
         ctx.body = {
@@ -82,7 +89,7 @@ async function register(ctx) {
 
 async function logout(ctx, next){
   ctx.cookies.set('jwt', null)
-  // ctx.session = null;
+  ctx.session = null;
   ctx.body = {msg: 'logout success!'}
 }
 

@@ -9,8 +9,9 @@ const helmet = require('koa-helmet')
 const { ApolloServer, gql } = require('apollo-server-koa');
 
 const errorHandler = require('./middlewares/error-handler')
+const router = require('./routes/index')
 const { mongoURI, secret } = require('./config')
-const { typeDefs, resolvers } = require('./models/schema')
+const { typeDefs, resolvers } = require('./middlewares/schema')
 
 mongoose.connect(mongoURI, {useMongoClient: true});
 mongoose.Promise = global.Promise
@@ -22,25 +23,22 @@ app.keys = ['newest secret key', 'older secret key'];
 const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app, path: "/query" });
 
-const loginRouter = require('./routes/login')
-const userRouter = require('./routes/user')
 
-const router = new Router();
-router.use(loginRouter.routes(), loginRouter.allowedMethods());
-router.use(userRouter.routes(), userRouter.allowedMethods());
-
-app
-  .use(errorHandler)
-  // .use(session({key:'jwt'}, app))
-  .use(jwt({ secret, cookie: 'jwt' }).
+app.use(errorHandler)
+  .use(helmet())
+  .use(cors())
+  .use(session({key:'jwt'}, app))
+  .use(jwt({ secret, cookie: "jwt"}).
     unless({
-    path: [/\/register/, 
+    path: [
+          /\/logout/,
+          /\/register/, 
           /\/login/,],
   }))
   .use(bodyparser())
   .use(router.routes())
   .use(router.allowedMethods())
-  .use(helmet())
-  .use(cors())
+
+
 
 app.listen(3000)
