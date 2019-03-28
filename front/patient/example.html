@@ -10,14 +10,14 @@
 <script src="./js/utils.js"></script>
 <script src="./js/patient.js"></script>
 <script type="text/javascript">
-    $.post("http:localhost:3000/login", {userId:16, password:123,}, (res)=>{
+    $.post("http://api.zhongnan.io/login", {userId:16, password:123,}, (res)=>{
         var token = res.token;
         console.log(res)
         let data ={
             query: "{user {userId}}",
             }
         $.ajax({
-            url: "http://localhost:3000/query",
+            url: "http://api.zhongnan.io/query",
             type: "POST",
             data: data,
             beforeSend: (req)=>{

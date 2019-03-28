@@ -21,6 +21,7 @@ async function login(ctx) {
       if (!user) {
         ctx.status = 401
         ctx.body = {
+          status: 'fail',
           message: '账号错误',
         }
         return;
@@ -40,6 +41,7 @@ async function login(ctx) {
         ctx.cookies.set('jwt', token)
         // ctx.session.jwt = token
         ctx.body = {
+          status: 'succ',
           message: '登录成功',
           user: user.userInfo,
           // 生成 token 返回给客户端
@@ -48,6 +50,7 @@ async function login(ctx) {
       } else {
         ctx.status = 401
         ctx.body = {
+          status: 'fail',
           message: '密码错误',
         }
       }
@@ -73,12 +76,14 @@ async function register(ctx) {
         user = await newUser.save();
         ctx.status = 200;
         ctx.body = {
+          status: 'succ',
           message: '注册成功',
           user: user.userInfo,
         }
       } else {
         ctx.status = 406;
         ctx.body = {
+          status:'fail',
           message: '用户账号已经存在',
         }
       }
@@ -90,7 +95,10 @@ async function register(ctx) {
 async function logout(ctx, next){
   ctx.cookies.set('jwt', null)
   ctx.session = null;
-  ctx.body = {msg: 'logout success!'}
+  ctx.body = {
+    status: 'succ',
+    msg: 'logout success!'
+  }
 }
 
 
