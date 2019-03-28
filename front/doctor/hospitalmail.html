@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+<div class="page">
+    <!-- Main Navbar-->
+    <header class="header">
+        <nav class="navbar">
+            <!-- Search Box-->
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                    <input type="search" placeholder="What are you looking for..." class="form-control">
+                </form>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <!-- Navbar Header-->
+                    <div class="navbar-header">
+                        <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                        <div class="brand-text d-none d-lg-inline-block"><span>医生 </span><strong>工作台</strong></div>
+                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                        <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                    </div>
+                    <!-- Navbar Menu -->
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                        <!-- Search-->
+                        <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                        <!-- Notifications-->
+
+                        <!-- Logout    -->
+                        <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">退出</span><i class="fa fa-sign-out"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+            <!-- Sidebar Header-->
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+                    <h1 class="h4">ZZZ</h1>
+                    <p>内科医师</p>
+                </div>
+            </div>
+            <!-- Sidebar Navidation Menus--><span class="heading">工作栏</span>
+            <ul class="list-unstyled">
+                <li><a href="doctorindex.html"> <i class="icon-home"></i>病人预约 </a></li>
+                <li><a href="bedtable.html"> <i class="icon-grid"></i>床位表 </a></li>
+                <li><a href="doctorlevel.html"> <i class="icon-interface-windows"></i> 患者评价</a></li>
+                <li class="active"><a href="hospitalmail.html"> <i class="icon-mail"></i>医院信箱</a></li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>值班表 </a>
+                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li><a href="onDuty1.html">科室1</a></li>
+                        <li><a href="onDuty2.html">科室2</a></li>
+                        <li><a href="onDuty3.html">科室3</a></li>
+                    </ul>
+                </li>
+                <li><a href="login.html"> <i class="icon-screen"></i>Login page </a></li>
+            </ul><span class="heading">Extras</span>
+            <ul class="list-unstyled">
+                <li> <a href="treatment.html"> <i class="icon-flask"></i>诊治页面 </a></li>
+            </ul>
+        </nav>
+        <div class="content-inner">
+            <!-- Page Header-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">医院信箱</h2>
+                </div>
+            </header>
+<br>
+            <!-- Feeds Section-->
+            <section class="feeds no-padding-top">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <!-- Trending Articles-->
+                        <div class="col-lg-6">
+                            <div class="articles card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard4" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h2 class="h3">最近留言   </h2>
+                                    <div class="badge badge-rounded bg-green">5 条新消息       </div>
+                                </div>
+                                <div class="card-body no-padding">
+                                    <div class="item d-flex align-items-center">
+                                        <div class="text"><a href="#">
+                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
+                                    </div>
+                                    <div class="item d-flex align-items-center">
+                                        <div class="text"><a href="#">
+                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
+                                    </div>
+                                    <div class="item d-flex align-items-center">
+                                        <div class="text"><a href="#">
+                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
+                                    </div>
+                                    <div class="item d-flex align-items-center">
+                                        <div class="text"><a href="#">
+                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
+                                    </div>
+                                    <div class="item d-flex align-items-center">
+                                        <div class="text"><a href="#">
+                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Basic Form-->
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h3 class="h4">回复留言</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>在这里回复群众留言（将统一用医院邮箱回复）</p>
+                                    <form>
+                                        <div class="form-group">
+                                            <label class="form-control-label">群众邮箱</label>
+                                            <input type="email" placeholder="邮箱" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">回复内容</label>
+                                            <input type="password" placeholder="内容" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="回复" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Updates Section                                                -->
+            <section class="updates no-padding-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Recent Updates-->
+
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+<!-- JavaScript files-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/popper.js/umd/popper.min.js"> </script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+<script src="js/charts-home.js"></script>
+<!-- Main File-->
+<script src="js/front.js"></script>
+</body>
+</html>
