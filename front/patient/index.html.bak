@@ -20,8 +20,6 @@
     <!-- animation-effect -->
     <link href="css/animate.min.css" rel="stylesheet">
     <script src="js/wow.min.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/patient.js"></script>
     <script>
         new WOW().init();
     </script>
@@ -46,14 +44,14 @@
                     <form id="loginForm">
                         <fieldset id="body">
                             <fieldset>
-                                <label for="email">ID</label>
-                                <input type="text" name="email" id="userId">
+                                <label for="email">邮箱地址</label>
+                                <input type="text" name="email" id="email">
                             </fieldset>
                             <fieldset>
                                 <label for="password">密码</label>
                                 <input type="password" name="password" id="password">
                             </fieldset>
-                            <input type="button" id="login" value="登录" onclick="patient.patientLogin()">
+                            <input type="submit" id="login" value="登录">
                             <label for="checkbox"><input type="checkbox" id="checkbox"> <i>记住我</i></label>
                         </fieldset>
                         <span><a href="#">忘了密码?</a></span>

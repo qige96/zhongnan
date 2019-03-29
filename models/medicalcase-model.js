@@ -3,12 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const MedicalCaseSchema = new Schema({
-    userId: String,
-    username: String,
+    userId: Number,
     bedId: Number,
     roomId: Number,
     date: Date,
-    doctor: String,
+    doctorId: Number,
     history: String,
     symptom: String,
     diagnosis: String,

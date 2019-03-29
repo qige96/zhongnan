@@ -45,15 +45,15 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form method="post" class="form-validate">
+                  <form class="form-validate">
                     <div class="form-group">
                       <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
-                      <label for="login-username" class="label-material">User Name</label>
+                      <label for="login-username" class="label-material">Doctor ID</label>
                     </div>
                     <div class="form-group">
                       <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">Password</label>
-                    </div><a id="login" href="index.html" class="btn btn-primary">Login</a>
+                    </div><button id="login-btn" class="btn btn-primary">Login</button>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   </form><a href="#" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="register.html" class="signup">Signup</a>
                 </div>
@@ -77,5 +77,16 @@
     <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
     <!-- Main File-->
     <script src="js/front.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/doctor.js"></script>
+    <script type="text/javascript">
+      $("#login-btn").unbind('click')
+      $("#login-btn").click(function(){
+        doctor.doctorLogin().then((res)=>{
+          alert("success")
+          window.location.href = "doctorindex.html"
+        })
+      })
+    </script>
   </body>
 </html>

@@ -113,23 +113,23 @@
                         <table border="1" width="700px" style="text-align: center;" >
                             <tr>
                                 <td width="80px" height="40px">姓名</td>
-                                <td width="120px"></td>
-                                <td width="80px">性别</td>
-                                <td width="120px"></td>
+                                <td width="120px" id="username"></td>
+                                <td width="80px" >性别</td>
+                                <td width="120px" id="gender"></td>
                                 <td rowspan="4" width="100px">头像</td>
                             </tr>
                             <tr>
                                 <td height="40px">年龄</td>
-                                <td> </td>
+                                <td id="age"> </td>
                                 <td>床位号</td>
-                                <td> 暂无</td>
+                                <td id="bedroom"> 暂无</td>
                             </tr>
 
                             <tr>
                                 <td height="40px">问诊日期</td>
-                                <td> </td>
+                                <td id="date"> </td>
                                 <td height="40px">证件号</td>
-                                <td > </td>
+                                <td id="userId"> </td>
                             </tr>
 
                         </table>
@@ -139,25 +139,25 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">症状</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control">
+                                    <input id="symptom" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">诊断</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control">
+                                    <input id="diagnosis" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">所需药物</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control">
+                                    <input id="drug" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">备注</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control">
+                                    <input id="note" type="text" class="form-control">
                                 </div>
                             </div>
 
@@ -176,23 +176,23 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 form-control-label">病房</label>
                                 <div class="col-sm-9">
-                                    <select name="account" class="form-control mb-3">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select id="bed-id" name="account" class="form-control mb-3">
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                        <option value=3>3</option>
+                                        <option value=4>4</option>
+                                        <option value=5>5</option>
                                     </select>
                                 </div>
                                 <label class="col-sm-3 form-control-label">床号</label>
                                 <div class="col-sm-9">
-                                    <select name="account" class="form-control mb-3">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
+                                    <select id="room-id" name="account" class="form-control mb-3">
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                        <option value=3>3</option>
+                                        <option value=4>4</option>
+                                        <option value=5>5</option>
+                                        <option value=6>6</option>
                                     </select>
                                 </div>
                             </div>
@@ -218,5 +218,69 @@
 <script src="js/charts-home.js"></script>
 <!-- Main File-->
 <script src="js/front.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/doctor.js"></script>
+
+<script type="text/javascript">
+    const appointment = JSON.parse(window.localStorage.appointment)
+    const appointIndex = Number.parseInt(window.localStorage.appointmentIndex)
+    const thisAppointment = appointment[appointIndex]
+    console.log(thisAppointment)
+
+    $("#username").text(thisAppointment.user.username)
+    $("#gender").text(thisAppointment.user.gender)
+    $("#userId").text(thisAppointment.user.userId)
+    $("#age").text(thisAppointment.user.age)
+    $("#date").text(thisAppointment.date)
+
+    $(".btn-primary").click(function(){
+        const userId = thisAppointment.user.userId
+        const doctorId = doctor.getCurrentDoctor().doctorId
+        const bedId = Number.parseInt($("#bed-id").val())
+        const roomId = Number.parseInt($("#room-id").val())
+        const date = thisAppointment.date
+        const symptom = $("#symptom").val()
+        const diagnosis = $("#diagnosis").val()
+        const drug = $("#drug").val()
+        const note = $("#note").val()
+
+        let postData = {
+            query: `
+
+                mutation{
+                  addMedicalCase(symptom:"${symptom}", drug:"${drug}", note:"${note}",  diagnosis:"${diagnosis}",  userId:${userId}, 
+                    doctorId:${doctorId}, bedId:${bedId}, roomId:${roomId}, date:"${date}")
+                  {
+                    user{
+                      userId
+                      username
+                      age
+                      gender
+                    }
+                    doctor{
+                      doctorId
+                      doctorname
+                      department
+                    }
+                    bed{
+                      roomId
+                      bedId
+                    }
+                    date
+                    history
+                    symptom
+                    diagnosis
+                    drug
+                    note
+                  }
+                }
+            `
+        }
+        console.log(postData)
+        utils.authPost("http://127.0.0.1:3000/query", postData).then((res)=>{
+            alert("success")
+        })
+    })
+</script>
 </body>
 </html>

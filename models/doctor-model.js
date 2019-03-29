@@ -6,7 +6,7 @@ const DoctorSchema = new Schema({
     doctorId: Number,
     doctorname: String,
     password: String,
-    age: Integer,
+    age: Number,
     department: String,
     years: Number,
 })

@@ -98,34 +98,34 @@
                 <div class="book_date">
                     <form>
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <input class="date" id="datepicker" type="text" value="19/10/2016" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '19/10/2016';}" required="">
+                        <input class="date" id="datepicker" type="date" value="2016-10-19" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '2016-10-19';}" required="">
                     </form>
                 </div>
                 <h5>时间</h5>
                 <!----------start section_room----------->
                 <div class="section_room">
-                    <select id="country" onchange="change_country(this.value)" class="frm-field required">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><option value="null">8:00-11:00</option>
-                        <option value="null">14:00-16:00</option>
-                        <option value="AX">16:00-18:00</option>
+                    <select id="timeSlot" onchange="change_country(this.value)" class="frm-field required">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span><option value="1">8:00-11:00</option>
+                        <option value="2">14:00-16:00</option>
+                        <option value="3">16:00-18:00</option>
                     </select>
                 </div>
                 <h5>科目</h5>
                 <!----------start section_room----------->
                 <div class="section_room">
-                    <select id="country" onchange="change_country(this.value)" class="frm-field required sect">
-                        <option value="null">内科</option>
-                        <option value="null">外科</option>
-                        <option value="null">妇科</option>
-                        <option value="null">精神科</option>
-                        <option value="null">儿童科</option>
+                    <select id="dept" onchange="change_country(this.value)" class="frm-field required sect">
+                        <option value="内科">内科</option>
+                        <option value="外科">外科</option>
+                        <option value="妇科">妇科</option>
+                        <option value="精神科">精神科</option>
+                        <option value="儿童科">儿童科</option>
                     </select>
                 </div>
                 <div class="book">
                     <h5>备注（症状、个人情况等）</h5>
                     <form>
                         <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><textarea value="Message:" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}">备注</textarea>
-                        <input type="submit" value="提交预约">
+                        <input id="submit-btn" type="button" value="提交预约">
                     </form>
                 </div>
             </div>
@@ -136,6 +136,49 @@
 
 <!-- for bootstrap working -->
 <script src="js/bootstrap.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/patient.js"></script>
+<script type="text/javascript">
+    let user = utils.getCurrentUser()
+    if(user){
+        $(".header-top-right > span").text(user.username)
+    }
+
+    $("#submit-btn").click(function(){
+        let user = utils.getCurrentUser()
+        if(!user){
+            alert("please login")
+        }else{
+            const date = $("#datepicker").val()
+            const department = $("#dept").val()
+            const timeSlot = $("#timeSlot").val()
+            const note = $("textarea").val()
+
+            console.log(department)
+            
+            const postData = {
+                query: `mutation {
+                    addAppointment(userId:${user.userId},department:"${department}", date:"${date}", timeSlot:${timeSlot}, note:"${note}")
+                        {
+                            user{userId username}
+                            timeSlot
+                            department
+                            note
+                        }
+                    }`
+            }
+
+            utils.authPost("http://api.zhongnan.io/query", postData).then((res)=>{
+                if (res.data){
+                    alert("success")
+                }else{
+                    alert("fail")
+                }
+            })
+        }
+    })
+
+</script>
 <!-- //for bootstrap working -->
 </body>
 </html>

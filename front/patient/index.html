@@ -20,12 +20,13 @@
     <!-- animation-effect -->
     <link href="css/animate.min.css" rel="stylesheet">
     <script src="js/wow.min.js"></script>
+
     <script>
         new WOW().init();
     </script>
     <!-- //animation-effect -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'> -->
 </head>
 
 <body>
@@ -44,14 +45,14 @@
                     <form id="loginForm">
                         <fieldset id="body">
                             <fieldset>
-                                <label for="email">邮箱地址</label>
-                                <input type="text" name="email" id="email">
+                                <label for="email">ID</label>
+                                <input type="text" name="email" id="userId">
                             </fieldset>
                             <fieldset>
                                 <label for="password">密码</label>
                                 <input type="password" name="password" id="password">
                             </fieldset>
-                            <input type="submit" id="login" value="登录">
+                            <input type="button" id="login" value="登录" onclick="patient.patientLogin()">
                             <label for="checkbox"><input type="checkbox" id="checkbox"> <i>记住我</i></label>
                         </fieldset>
                         <span><a href="#">忘了密码?</a></span>
@@ -248,6 +249,16 @@
 <!-- //footer -->
 <!-- for bootstrap working -->
 <script src="js/bootstrap.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/patient.js"></script>
+<script type="text/javascript">
+    
+    if(window.localStorage.user){
+        const user = JSON.parse(window.localStorage.user)
+        console.log(user)
+        $("#loginButton").html(user.userId)
+    }
+</script>
 <!-- //for bootstrap working -->
 </body>
 </html>

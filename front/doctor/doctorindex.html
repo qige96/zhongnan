@@ -134,83 +134,10 @@
             </section>
             <!-- Projects Section-->
             <section class="projects no-padding-top">
-                <div class="container-fluid">
+                <div id="appointment-list" class="container-fluid">
+                    
                     <!-- Project-->
-                    <div class="project">
-                        <div class="row bg-white has-shadow">
-                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
-                                <div class="project-title d-flex align-items-center">
-
-                                    <div class="text">
-                                        <h3 class="h4">病人甲</h3><small>123456789</small>
-                                    </div>
-                                </div>
-                                <div class="project-date"><span class="hidden-sm-down">XX科</span></div>
-                            </div>
-                            <div class="right-col col-lg-6 d-flex align-items-center">
-                                <div class="time"><i class="fa fa-clock-o"></i>12:00 PM </div>
-                                <div class="comments"><i class="fa fa-comment-o"></i>备注：XXX</div>
-                                <div><button>诊治</button></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Project-->
-                    <div class="project">
-                        <div class="row bg-white has-shadow">
-                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
-                                <div class="project-title d-flex align-items-center">
-
-                                    <div class="text">
-                                        <h3 class="h4">病人乙</h3><small>123456789</small>
-                                    </div>
-                                </div>
-                                <div class="project-date"><span class="hidden-sm-down">XX科</span></div>
-                            </div>
-                            <div class="right-col col-lg-6 d-flex align-items-center">
-                                <div class="time"><i class="fa fa-clock-o"></i>12:00 PM </div>
-                                <div class="comments"><i class="fa fa-comment-o"></i>备注：XXX</div>
-                                <div><button>诊治</button></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Project-->
-                    <div class="project">
-                        <div class="row bg-white has-shadow">
-                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
-                                <div class="project-title d-flex align-items-center">
-
-                                    <div class="text">
-                                        <h3 class="h4">病人丙</h3><small>123456789</small>
-                                    </div>
-                                </div>
-                                <div class="project-date"><span class="hidden-sm-down">XX科</span></div>
-                            </div>
-                            <div class="right-col col-lg-6 d-flex align-items-center">
-                                <div class="time"><i class="fa fa-clock-o"></i>12:00 PM </div>
-                                <div class="comments"><i class="fa fa-comment-o"></i>备注：XXX</div>
-                                <div><button>诊治</button></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Project-->
-                    <div class="project">
-                        <div class="row bg-white has-shadow">
-                            <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
-                                <div class="project-title d-flex align-items-center">
-
-                                    <div class="text">
-                                        <h3 class="h4">病人丁</h3><small>123456789</small>
-                                    </div>
-                                </div>
-                                <div class="project-date"><span class="hidden-sm-down">XX科</span></div>
-                            </div>
-                            <div class="right-col col-lg-6 d-flex align-items-center">
-                                <div class="time"><i class="fa fa-clock-o"></i>12:00 PM </div>
-                                <div class="comments"><i class="fa fa-comment-o"></i>备注：XXX</div>
-                                <div><button>诊治</button></div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </section>
 
@@ -227,5 +154,69 @@
 <script src="js/charts-home.js"></script>
 <!-- Main File-->
 <script src="js/front.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/doctor.js"></script>
+<script>
+    const currentDoctor = doctor.getCurrentDoctor()
+    $(".title > .h4").text(currentDoctor.doctorname)
+    $(".title > p").text(currentDoctor.department + "医生")
+
+    utils.authPost("http://127.0.0.1:3000/query", {
+        query: `
+            {
+                appointment{
+                    user {
+                        userId
+                        username
+                        gender
+                        age
+                    }
+                    date
+                    timeSlot
+                    note
+                    department
+                }
+            }
+        `
+    }).then((res)=>{
+        // console.log(res.data)
+        window.localStorage.appointment = JSON.stringify(res.data.appointment)
+        let $elem
+        let i = 0;
+        // let appointTemplate = 
+        for (item of res.data.appointment){
+            $elem = $(`
+                <div class="project">
+                    <div class="row bg-white has-shadow">
+                        <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+                            <div class="project-title d-flex align-items-center">
+
+                                <div class="text">
+                                    <h3 class="h4">${item.user.username}</h3><small>${item.user.userId}</small>
+                                </div>
+                            </div>
+                            <div class="project-date"><span class="hidden-sm-down">${item.department}</span></div>
+                        </div>
+                        <div class="right-col col-lg-6 d-flex align-items-center">
+                            <div class="time"><i class="fa fa-clock-o"></i>${item.timeSlot}</div>
+                            <div class="comments"><i class="fa fa-comment-o"></i>备注: ${item.note}</div>
+                            <div><button data-index=${i}>诊治</button></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                    `)
+
+            $elem.find("button").click(function(){
+                // console.log($(this))
+                window.localStorage.appointmentIndex = $(this).attr("data-index")
+                window.location.href = "treatment.html"
+            })
+
+            $("#appointment-list").append($elem)
+            i++;
+        }
+    })
+</script>
 </body>
 </html>

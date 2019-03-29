@@ -1,4 +1,6 @@
 
+
+
 function patientLogin(){
     return new Promise(function(resolve, reject){
         const userId = $("#userId").val()
@@ -12,7 +14,9 @@ function patientLogin(){
                 if (res.status == 'succ'){
                     console.log(res)
                     window.localStorage.setItem("token", res.token)
+                    window.localStorage.setItem("user", JSON.stringify(res.user))
                     $("#loginButton > span").text(res.user.userId)
+                    window.location.href = "personalappointment.html"
                 }else{
                     console.log(res.message)
                 }
@@ -30,7 +34,10 @@ function patientLogout(){
             success: (res)=>{
                 if (res.status == 'succ'){
                     console.log(res)
-                    window.localStorage.setItem("token", null)
+                    window.localStorage.removeItem("token")
+                    window.localStorage.removeItem("user")
+                    $("#loginButton").html("<span>登录</span>")
+
                 }else{
                     console.log(res.message)
                 }
@@ -39,7 +46,7 @@ function patientLogout(){
     })
 }
 
-function patientRegister(userId, password, gender="male", age=18){
+function patientRegister(userId, username, password, gender="male", age=18){
     return new Promise(function(resolve, reject){
         const data = { userId, password, gender, age }
         $.ajax({
@@ -69,3 +76,4 @@ patient = {
     patientRegister,
     login,
 }
+

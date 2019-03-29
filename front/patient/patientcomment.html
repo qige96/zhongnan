@@ -87,25 +87,16 @@
                 <table border="1" width="700px" style="text-align: center;" >
                     <tr>
                         <td width="80px" height="60px">主治医生</td>
-                        <td width="170px"></td>
+                        <td width="170px" id="doctor"></td>
                         <td rowspan="3" width="75px">头像</td>
                     </tr>
                     <tr>
                         <td height="60px">科室</td>
-                        <td> </td>
+                        <td id="department"> </td>
                     </tr>
                     <tr>
                         <td height="60px">评分</td>
-                        <td> </td>
-                    </tr>
-                    <tr>
-                        <td height="80px" colspan="3">评价</td>
-                    </tr>
-                    <tr>
-                        <td height="80px" colspan="3">评价</td>
-                    </tr>
-                    <tr>
-                        <td height="80px" colspan="3">评价</td>
+                        <td id="score"> </td>
                     </tr>
 
                 </table>
@@ -119,17 +110,17 @@
                     <h5>评价</h5>
                     <form>
                         <p style="color: white">差&nbsp
-                            <input name="comment" type="radio">
-                            <input name="comment" type="radio">
-                            <input name="comment" type="radio">
-                            <input name="comment" type="radio">
-                            <input name="comment" type="radio">
+                            <input name="comment" type="radio" value=1>
+                            <input name="comment" type="radio" value=2>
+                            <input name="comment" type="radio" value=3>
+                            <input name="comment" type="radio" value=4>
+                            <input name="comment" type="radio" value=5>
                             &nbsp好
                         </p><br>
 
 
                         <textarea value="Message:" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}">评价</textarea>
-                        <input type="submit" value="提交评价">
+                        <input id="submit-btn" type="button" value="提交评价">
                     </form>
                 </div>
             </div>
@@ -141,6 +132,88 @@
 
 <!-- for bootstrap working -->
 <script src="js/bootstrap.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/patient.js"></script>
+<script type="text/javascript">
+    const user = utils.getCurrentUser()
+    if(user)
+        $(".header-top-right > span").text(user.username)
+
+
+
+    let doctor;
+    utils.authPost("http://127.0.0.1:3000/query", {
+        query: `
+            {
+                medicalCase(userId:${user.userId}){
+                    doctor{
+                        doctorId
+                        doctorname
+                        age
+                        years
+                        department
+                    }
+                }
+            }
+        `
+    }).then((res)=>{
+        doctor = res.data.medicalCase.doctor
+        $("#doctor").text(doctor.doctorname)
+        $("#department").text(doctor.department)
+
+        utils.authPost("http://127.0.0.1:3000/query",{
+            query: `
+                {
+                    doctorAssessment(doctorId:${doctor.doctorId}){
+                        score
+                        assessment
+                    }
+                }
+            `
+        }).then((res)=>{
+            console.log(res.data.doctorAssessment)
+            let assessments = res.data.doctorAssessment.reverse()
+            let totalScore = 0;
+            for (assess of assessments)
+                totalScore += assess.score
+            $("#score").text((totalScore*1.0 / assessments.length).toFixed(1))
+
+            for (let i = 0; i<5 && i<assessments.length; i++){
+                console.log(assessments[i])
+
+                let $elem = $(`
+                    <tr>
+                        <td height="80px" colspan="3">${assessments[i].assessment}</td>
+                    </tr>
+                    `)
+                $("table").append($elem)
+            }
+        })
+    })
+
+    $("#submit-btn").click(function(){
+        const score = Number.parseInt($("input[type='radio']:checked").val())
+        const assessment = $("textarea").val()
+        console.log(score, assessment)
+
+        utils.authPost("http://127.0.0.1:3000/query", {
+        query: `
+                mutation{
+                    addDoctorAssessment(doctorId:${doctor.doctorId},
+                        score:${score}, assessment:"${assessment}"){
+                            score
+                            assessment
+                        }
+                }
+            `
+        }).then((res)=>{
+            alert("success")
+        })
+
+    })
+
+
+</script>
 <!-- //for bootstrap working -->
 </body>
 </html>

@@ -24,13 +24,16 @@ const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app, path: "/query" });
 
 
-app.use(errorHandler)
-  .use(helmet())
+app.use(helmet())
   .use(cors())
+  .use(errorHandler)
   .use(session({key:'jwt'}, app))
   .use(jwt({ secret, cookie: "jwt"}).
     unless({
     path: [
+          /\/doc-logout/,
+          /\/doc-register/, 
+          /\/doc-login/,
           /\/logout/,
           /\/register/, 
           /\/login/,],
