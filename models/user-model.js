@@ -17,6 +17,8 @@ UserSchema
     return {
       username: this.username,
       userId: this.userId,
+      age: this.age,
+      gender: this.gender,
     }
   })
 

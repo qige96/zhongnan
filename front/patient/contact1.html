@@ -81,7 +81,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="index1.html">首页</a></li>
+                    <li><a href="index.html">首页</a></li>
                     <li><a href="about1.html">关于我们</a></li>
                     <li class="active"><a href="contact1.html">联系我们</a></li>
                 </ul>
@@ -109,11 +109,10 @@
                 <h2>意见表</h2>
                 <p>希望您能将宝贵意见写下来，有助于本院坚持不懈改善服务质量，工作人员将会在后台邮箱看到您的意见。</p>
                 <form>
-                    <input type="text" class="text" value="姓名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}">
-                    <input type="text" class="text" value="邮箱" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}">
-                    <input type="text" class="text" value="类型" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject';}">
-                    <textarea onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}">意见</textarea>
-                    <input type="submit" value="提交意见">
+                    <input type="text" class="text" value="姓名" id="contact-name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'name';}">
+                    <input type="text" class="text" value="邮箱" id="contact-mail" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}">
+                    <textarea onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}" id="contact-text">意见</textarea>
+                    <input type="button" value="提交意见" id="submit-btn">
                 </form>
             </div>
             <div class="col-md-4 company-right animated wow slideInRight" data-wow-delay=".5s">
@@ -140,5 +139,40 @@
 <!-- for bootstrap working -->
 <script src="js/bootstrap.js"></script>
 <!-- //for bootstrap working -->
+<script src="js/utils.js"></script>
+<script src="js/patient.js"></script>
+<script type="text/javascript">
+     let user = utils.getCurrentUser()
+    if(user){
+        $("#loginButton > span").text(user.username)
+    }
+    $("#submit-btn").click(function(){
+        const name = $("#contact-name").val()
+        const mail = $("#contact-mail").val()
+        const text = $("#contact-text").val()
+    
+
+        
+        const postData = {
+            query: `mutation {
+                addMail(email:"${mail}",username:"${name}",claim:"${text}")
+                    {
+                        email
+                        username
+                        claim
+                    }
+                }`
+        }
+
+        utils.authPost("http://api.zhongnan.io/query", postData).then((res)=>{
+            if (res.data){
+                alert("success")
+            }else{
+                alert("fail")
+            }
+        })
+        
+    })
+</script>
 </body>
 </html>

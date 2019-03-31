@@ -22,7 +22,7 @@ exports.typeDefs = gql`
     userId: Int,
     username: String,
     age: Int,
-    gender: Boolean
+    gender: String
   }
 
   type Doctor {
@@ -104,7 +104,12 @@ exports.resolvers = {
     userId: (user)  => user.userId,
     username: (user)=> user.username,
     age: (user)=> user.age,
-    gender: (user)=> user.gender,
+    gender: (user)=> {
+      if(user.gender)
+        return "男"
+      else
+        return "女"
+    },
   },
 
   Doctor: {
@@ -173,13 +178,13 @@ exports.resolvers = {
 
   Mutation: {
     async updateUser(parent, args){
-      await User.updateOne(args)
+      await User.updateOne({userId:args.userId}, args)
       const user = await User.findOne({userId: args.userId})
       // console.log(user)
       return user
     },
     async updateDoctor(parent, args){
-      await Doctor.updateOne(args)
+      await Doctor.updateOne({userId:args.doctorId}, args)
       const doctor = await Doctor.findOne({doctorId: args.doctorId})
       return doctor
     },
@@ -204,7 +209,7 @@ exports.resolvers = {
     },
 
     async updateMedicalCase(parent, args){
-      await MedicalCase.updateOne(args)
+      await MedicalCase.updateOne({userId:args.userId}, args)
       const mcase = await MedicalCase.findOne(args)
       return mcase
     },
@@ -227,7 +232,7 @@ exports.resolvers = {
         users = await User.find({username:args.username})
       else
         users = await User.find()
-      return users   
+      return users
     },
 
     async doctor(parent, args){

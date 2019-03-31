@@ -115,27 +115,12 @@
                                     <h2 class="h3">最近留言   </h2>
                                     <div class="badge badge-rounded bg-green">5 条新消息       </div>
                                 </div>
-                                <div class="card-body no-padding">
+                                <div class="card-body no-padding" id="contact-text">
                                     <div class="item d-flex align-items-center">
                                         <div class="text"><a href="#">
                                             <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
                                     </div>
-                                    <div class="item d-flex align-items-center">
-                                        <div class="text"><a href="#">
-                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
-                                    </div>
-                                    <div class="item d-flex align-items-center">
-                                        <div class="text"><a href="#">
-                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
-                                    </div>
-                                    <div class="item d-flex align-items-center">
-                                        <div class="text"><a href="#">
-                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
-                                    </div>
-                                    <div class="item d-flex align-items-center">
-                                        <div class="text"><a href="#">
-                                            <h3 class="h5">123456789@qq.com</h3></a><small>希望加快挂号速度，每次都要等好久   </small></div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -196,5 +181,37 @@
 <script src="js/charts-home.js"></script>
 <!-- Main File-->
 <script src="js/front.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/doctor.js"></script>
+<script type="text/javascript">
+    utils.authPost("http://127.0.0.1:3000/query", {
+        query: `
+            {
+                mail{
+                    email
+                    claim
+                }
+            }
+        `
+    }).then((res)=>{
+        // console.log(res.data)
+        
+        let $elem
+        // let appointTemplate = 
+        for (item of res.data.mail){
+            $elem = $(`
+                <div class="item d-flex align-items-center">
+                    <div class="text">
+                        <a href="#"><h3 class="h5">${item.email}</h3></a>
+                        <small>${item.claim}</small>
+                    </div>
+                </div>
+                    `)
+            $("#contact-text").append($elem)
+
+            
+        }
+    })
+</script>
 </body>
 </html>

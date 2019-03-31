@@ -38,7 +38,7 @@
         <div class="header-top-left1 animated wow slideInLeft" data-wow-delay=".7s">
             <h1>联系我们<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></h1>
         </div>
-        <div class="header-top-right">
+        <div class="header-top-right" id="user-welcome">
             <span style="color: white;font-size: larger;">欢迎，XXX</span>
         </div>
         <div class="clearfix"> </div>
@@ -143,6 +143,42 @@
 
 <!-- for bootstrap working -->
 <script src="js/bootstrap.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/patient.js"></script>
+<script type="text/javascript">
+    let user = utils.getCurrentUser()
+    if(user){
+        $("#user-welcome > span").text(user.username)
+    }
+    utils.authPost("http://127.0.0.1:3000/query", {
+        query: `
+            {
+                mail{
+                    email
+                    claim
+                }
+            }
+        `
+    }).then((res)=>{
+        // console.log(res.data)
+        
+        let $elem
+        // let appointTemplate = 
+        for (item of res.data.mail){
+            $elem = $(`
+                <div class="item d-flex align-items-center">
+                    <div class="text">
+                        <a href="#"><h3 class="h5">${item.email}</h3></a>
+                        <small>${item.claim}</small>
+                    </div>
+                </div>
+                    `)
+            $("#contact-text").append($elem)
+
+            
+        }
+    })
+</script>
 <!-- //for bootstrap working -->
 </body>
 </html>
