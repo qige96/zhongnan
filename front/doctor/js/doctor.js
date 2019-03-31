@@ -1,9 +1,10 @@
 const doctor = {
     doctorLogin(){
         return new Promise(function(resolve, reject){
-            const doctorId = $("#login-username").val()
+            const doctorId = $("#login-doctorId").val()
             const password = $("#login-password").val()
             const data = { doctorId, password };  
+            console.log(data)
             $.ajax({
                 url: "http://api.zhongnan.io/doc-login",
                 type: "GET",
@@ -13,7 +14,7 @@ const doctor = {
                         console.log(res)
                         window.localStorage.setItem("token", res.token)
                         window.localStorage.setItem("doctor", JSON.stringify(res.doctor))
-                        // resolve(res)
+                        resolve(res)
                     }else{
                         console.log(res.message)
                         reject(res)

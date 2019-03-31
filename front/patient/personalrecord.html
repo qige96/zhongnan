@@ -89,47 +89,47 @@
                 <table border="1" width="700px" style="text-align: center;" >
                     <tr>
                         <td width="80px" height="40px">姓名</td>
-                        <td width="120px"></td>
+                        <td width="120px" id="user-name"></td>
                         <td width="80px">性别</td>
-                        <td width="120px"></td>
+                        <td width="120px" id="user-gender"></td>
                         <td rowspan="4" width="100px">头像</td>
                     </tr>
                     <tr>
                         <td height="40px">年龄</td>
-                        <td> </td>
+                        <td id="user-age"> </td>
                         <td>床位号</td>
-                        <td> 暂无</td>
+                        <td id="user-bed"> 暂无</td>
                     </tr>
 
                     <tr>
                         <td height="40px">问诊日期</td>
-                        <td> </td>
+                        <td id="user-date"> </td>
                         <td height="40px">证件号</td>
-                        <td > </td>
+                        <td  id="user-id"> </td>
                     </tr>
                     <tr>
                         <td colspan="1" height="40px">主治医生</td>
-                        <td colspan="3"></td>
+                        <td colspan="3" id="user-doctor"></td>
                     </tr>
                     <tr>
                         <td colspan="1" height="120px">病史</td>
-                        <td colspan="4"></td>
+                        <td colspan="4" id="user-history"></td>
                     </tr>
                     <tr>
                         <td height="120px">症状</td>
-                        <td colspan="4"> </td>
+                        <td colspan="4" id="user-symptom"> </td>
                     </tr>
                     <tr>
                         <td height="120px">诊断</td>
-                        <td colspan="4"> </td>
+                        <td colspan="4" id="user-diagnosis"> </td>
                     </tr>
                     <tr>
                         <td height="120px">药物</td>
-                        <td colspan="4"> </td>
+                        <td colspan="4" id="user-drug"> </td>
                     </tr>
                     <tr>
                         <td height="30px">备注</td>
-                        <td colspan="4"> </td>
+                        <td colspan="4" id="user-note"> </td>
                     </tr>
                 </table>
                 <button>打印</button>
@@ -150,34 +150,50 @@
     if(user){
         $("#user-welcome > span").text(user.username)
     }
-    utils.authPost("http://127.0.0.1:3000/query", {
+    
+        // console.log(res.data)
+        
+        $("#user-name").text(user.username)
+        $("#user-gender").text(user.gender)
+        $("#user-age").text(user.age)
+        $("#user-id").text(user.userId)
+
+        utils.authPost("http://127.0.0.1:3000/query", {
         query: `
             {
-                mail{
-                    email
-                    claim
+                medicalCase(userId:${user.userId}){
+                    date
+                    bed{
+                        bedId
+                        roomId
+                    }
+                    doctor{
+                        doctorname
+                    }
+                    history
+                    symptom
+                    diagnosis
+                    drug
+                    note
                 }
             }
         `
     }).then((res)=>{
-        // console.log(res.data)
-        
-        let $elem
-        // let appointTemplate = 
-        for (item of res.data.mail){
-            $elem = $(`
-                <div class="item d-flex align-items-center">
-                    <div class="text">
-                        <a href="#"><h3 class="h5">${item.email}</h3></a>
-                        <small>${item.claim}</small>
-                    </div>
-                </div>
-                    `)
-            $("#contact-text").append($elem)
+        if(res.data.medicalCase){
+            const medicalcase = res.data.medicalCase
+            $("#user-date").text(medicalcase.date)
+            $("#user-bed").text(medicalcase.bed.roomId + " " + medicalcase.bed.bedId)
+            $("#user-doctor").text(medicalcase.doctor.doctorname)
+            $("#user-history").text(medicalcase.history)
+            $("#user-symptom").text(medicalcase.symptom)
+            $("#user-diagnosis").text(medicalcase.diagnosis)
+            $("#user-drug").text(medicalcase.drug)
+            $("#user-note").text(medicalcase.note)
+        }else{
 
-            
         }
     })
+  
 </script>
 <!-- //for bootstrap working -->
 </body>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+    <form>
+        <input type="text" id="login-doctorId">
+        <input type="password" id="login-password">
+        <input type="button" name="submit" value="login" id="login-btn">
+    </form>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+
+    <script src="js/utils.js"></script>
+    <script src="js/doctor.js"></script>
+    <script type="text/javascript">
+      $("#login-btn").unbind('click')
+      $("#login-btn").click(function(){
+        doctor.doctorLogin().then((res)=>{
+          alert("success")
+          window.location.href = "doctorindex.html"
+        })
+      })
+</script>
+</body>
+</html>

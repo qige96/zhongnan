@@ -14,11 +14,16 @@ const UserSchema = new Schema({
 UserSchema
   .virtual('userInfo')
   .get(function() {
+    let gender;
+    if(this.gender)
+      gender = "男"
+    else
+      gender = "女"
     return {
       username: this.username,
       userId: this.userId,
       age: this.age,
-      gender: this.gender,
+      gender: gender,
     }
   })
 
